@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             x:Class="HelpYouBudget.NETStandard.Views.ProductView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <!--<converters:BgColourConverter x:Key="BgColourConverter" />-->
+            <converters1:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+            <converters1:ButtonColourConverter x:Key="ButtonColourConverter" />
+            <converters1:ButtonTextColourConverter x:Key="ButtonTextColourConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <forms:CachedImage Source="{Binding Data.ProductDescriptionData}"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   Aspect="AspectFit"
+                                   CacheDuration="14" />
+            </Grid>
+
+
+
+            <Grid Grid.Row="1"
+                  Grid.RowSpan="2">
+                <ScrollView>
+                    <StackLayout Margin="20">
+                        <Label Text="{Binding Data.ProductName}"
+                               Style="{StaticResource BoldLabelStyle}" />
+
+
+                        <Label Text="{Binding Data.Description, StringFormat='Description: {0:N}'}"
+                               Style="{StaticResource LabelStyle}"
+                               IsVisible="{Binding Data.Description, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <!--store one-->
+                        <Label Text="{Binding Data.StoreOne, StringFormat='Store Name: {0:N}'}"
+                               Style="{StaticResource LabelStyle}"
+                               IsVisible="{Binding Data.StoreOne, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <Label Text="{Binding Data.StoreOnePrice, StringFormat='Price: ${0:N}'}"
+                               FontSize="10"
+                               Style="{StaticResource LabelStyle}"
+                               IsVisible="{Binding Data.StoreOne, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <!--store two-->
+                        <Label Text="{Binding Data.StoreTwo, StringFormat='Store Name: {0:N}'}"
+                               Style="{StaticResource LabelStyle}"
+                               Margin="0,10,0,0"
+                               IsVisible="{Binding Data.StoreTwo, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <Label Text="{Binding Data.StoreTwoPrice, StringFormat='Price: {0:N}'}"
+                               FontSize="10"
+                               Style="{StaticResource LabelStyle}"
+                               IsVisible="{Binding Data.StoreTwo, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+
+
+                        <!--store three-->
+
+
+                        <Label Text="{Binding Data.StoreThree, StringFormat='Store Name: {0:N}'}"
+                               Style="{StaticResource LabelStyle}"
+                               Margin="0,10,0,0"
+                               IsVisible="{Binding Data.StoreThree, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <Label Text="{Binding Data.StoreThreePrice, StringFormat='Price: {0:N}'}"
+                               FontSize="10"
+                               Style="{StaticResource LabelStyle}"
+                               IsVisible="{Binding Data.StoreThree, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+
+
+                        <!--store four-->
+
+
+                        <Label Text="{Binding Data.StoreFour, StringFormat='Store Name: {0:N}'}"
+                               Style="{StaticResource LabelStyle}"
+                               Margin="0,10,0,0"
+                               IsVisible="{Binding Data.StoreFour, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <Label Text="{Binding Data.StoreFourPrice, StringFormat='Price: {0:N}'}"
+                               FontSize="10"
+                               Style="{StaticResource LabelStyle}"
+                               IsVisible="{Binding Data.StoreFour, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                        <!--<Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>-->
+                        <!--<Grid IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}">-->
+
+                            <Button Text="Add"
+                                    Clicked="AddProductToWatchlist"
+                                    IsVisible="{Binding Data.IsFavourite, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}" />
+                            <Button Text="Remove"
+                                    Clicked="RemoveProductFromWatchlist"
+                                    IsVisible="{Binding Data.IsFavourite, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <!--</Grid>-->
+
+
+                        <!--</Grid>-->
+
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="3"
+                  BackgroundColor="White"
+                  Opacity="0.5"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ActivityIndicator Color="DeepSkyBlue"
+                                   WidthRequest="100"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsRunning="{Binding IsBusy}" />
+            </Grid>
+
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:views="clr-namespace:HelpYouBudget.NETStandard.Views;assembly=HelpYouBudget.NETStandard"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             x:Class="HelpYouBudget.NETStandard.Views.AdminView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <!--<converters:BgColourConverter x:Key="BgColourConverter" />-->
+            <converters1:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+            <converters1:ButtonColourConverter x:Key="ButtonColourConverter" />
+            <converters1:ButtonTextColourConverter x:Key="ButtonTextColourConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ScrollView>
+                <StackLayout Margin="20">
+                    <Label  Text="What is the name of the product:" />
+                    <views:ModifiedEntry Placeholder="Product name..."
+                                         Text="{Binding NewData.ProductName}"
+                                         Margin="0,0,0,10" />
+
+                    <Label  Text="Description:" />
+                    <views:ModifiedEntry Placeholder="Product description..."
+                                         Text="{Binding NewData.ProductDescription}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Category:" />
+                    <views:ModifiedEntry Placeholder="Product category..."
+                                         Text="{Binding NewData.ProductDescription}"
+                                         Margin="0,0,0,10" />
+                    <Label  Text="Subcategory:" />
+                    <views:ModifiedEntry Placeholder="Product subcategory..."
+                                         Text="{Binding NewData.SubCategory}"
+                                         Margin="0,0,0,10" />
+
+                    <Label  Text="Image Url:" />
+                    <views:ModifiedEntry Placeholder="Product image url..."
+                                         Text="{Binding NewData.ProductDescriptionData}"
+                                         Margin="0,0,0,10" />
+
+
+                    <!--Store One-->
+                    <Label  Text="Store One Details:"
+                            FontAttributes="Bold"
+                            Margin="0,10,0,10" />
+                    <Label  Text="Store name:" />
+                    <views:ModifiedEntry Placeholder="Store one name..."
+                                         Text="{Binding NewData.StoreOne}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store one product price:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreOnePrice}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store one url:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreOneUrl}"
+                                         Margin="0,0,0,10" />
+
+
+
+
+                    <!--Store Two-->
+                    <Label  Text="Store Two Details:"
+                            FontAttributes="Bold"
+                            Margin="0,10,0,10" />
+                    <Label  Text="Store name:" />
+                    <views:ModifiedEntry Placeholder="Store two name..."
+                                         Text="{Binding NewData.StoreTwo}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store two product price:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreTwoPrice}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store two url:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreTwoUrl}"
+                                         Margin="0,0,0,10" />
+
+
+
+
+                    <!--Store Three-->
+                    <Label  Text="Store Three Details:"
+                            FontAttributes="Bold"
+                            Margin="0,10,0,10" />
+                    <Label  Text="Store name:" />
+                    <views:ModifiedEntry Placeholder="Store three name..."
+                                         Text="{Binding NewData.StoreThree}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store three product price:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreThreePrice}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store three url:" />
+                    <views:ModifiedEntry Placeholder="Product url..."
+                                         Text="{Binding NewData.StoreThreeUrl}"
+                                         Margin="0,0,0,10" />
+
+
+
+                    <!--Store Four-->
+                    <Label  Text="Store Four Details:"
+                            FontAttributes="Bold"
+                            Margin="0,10,0,10" />
+                    <Label  Text="Store name:" />
+                    <views:ModifiedEntry Placeholder="Store four name..."
+                                         Text="{Binding NewData.StoreFour}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store four product price:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreFourPrice}"
+                                         Margin="0,0,0,10" />
+
+
+                    <Label  Text="Store four url:" />
+                    <views:ModifiedEntry Placeholder="Price..."
+                                         Text="{Binding NewData.StoreFourUrl}"
+                                         Margin="0,0,0,10" />
+
+                   
+
+
+
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" Margin="20,0,20,0">
+                <Button Text="Update Item"
+                        WidthRequest="90"
+                        Clicked="UpdateItemClicked"
+                        IsVisible="{Binding NewData.Id, Converter={StaticResource EmptyStringToVisibilityConverter}}"
+                        Style="{StaticResource MyButtonStyle}" />
+                <Button Text="Clear Item"
+                        WidthRequest="90"
+                        Clicked="ClearItemClicked"
+                        Style="{StaticResource MyButtonStyle}" />
+                <Button Text="Delete Item"
+                        WidthRequest="90"
+                        Clicked="DeleteItemClicked"
+                        IsVisible="{Binding NewData.Id, Converter={StaticResource EmptyStringToVisibilityConverter}}"
+                        Style="{StaticResource MyButtonStyle}" />
+                <Button Text="Add Item"
+                        WidthRequest="90"
+                        Clicked="AddItemClicked"
+                        IsVisible="{Binding NewData.Id, Converter={StaticResource EmptyStringToVisibilityConverter}, ConverterParameter=invert}"
+                        Style="{StaticResource MyButtonStyle}" />
+            </StackLayout>
+
+            <Grid Grid.Row="2">
+                <ListView x:Name="ListViewProducts"
+                          BackgroundColor="Transparent"
+                          RowHeight="80"
+                          ItemsSource="{Binding ResultsData}"
+                          SeparatorVisibility="None"
+                          ItemSelected="ShowSelectedItem"
+                          IsPullToRefreshEnabled="True"
+                          Refreshing="ReloadReportsRefreshPulled"
+                          Margin="6">
+
+
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <ViewCell>
+                                <Grid Padding="0,0,0,5">
+                                    <Grid BackgroundColor="DarkSeaGreen"
+                                          VerticalOptions="Fill"
+                                          HorizontalOptions="Fill"
+                                          Opacity="0.5" />
+                                    <Grid  Grid.Row="0"
+                                           VerticalOptions="Center"
+                                           Padding="5"
+                                           Margin="5,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <forms:CachedImage CacheDuration="14"
+                                                           FadeAnimationEnabled="True"
+                                                           FadeAnimationDuration="2"
+                                                           Source="{Binding ProductDescriptionData}"
+                                                           Grid.RowSpan="2"
+                                                           HorizontalOptions="Fill"
+                                                           VerticalOptions="Fill" />
+                                        <Label Grid.Row="0"
+                                               Grid.Column="1"
+                                               Text="{Binding ProductName}"
+                                               VerticalOptions="Center"
+                                               Style="{StaticResource BoldLabelStyle}" />
+                                        <Grid Grid.Row="1"
+                                              Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding LowestStore, StringFormat='Lowest Store: {0: N}'}"
+                                                   Style="{StaticResource SmallLabelStyle}"
+                                                   FontSize="10"
+                                                   Margin="0,0,5,0" />
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding LowestPrice, StringFormat='+ ${0}'}"
+                                                   Style="{StaticResource SmallLabelStyle}"
+                                                   FontSize="10" />
+                                        </Grid>
+
+                                    </Grid>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </Grid>
+            <Grid BackgroundColor="White"
+                  Grid.Row="0"
+                  Grid.RowSpan="3"
+                  Opacity="0.5"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ActivityIndicator Color="DeepSkyBlue"
+                                   WidthRequest="100"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsRunning="{Binding IsBusy}" />
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

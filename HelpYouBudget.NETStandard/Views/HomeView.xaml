@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelpYouBudget.NETStandard.Views.HomeView">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource BoneColorBackground}">
+            <StackLayout Margin="12">
+                <!--<Button Style="{StaticResource MyButtonStyle}"
+                        Text="Compare products"
+                        Clicked="NavigateToNext" />-->
+                <!--<Button Style="{StaticResource MyButtonStyle}"
+                        Text="View watchlist"
+                        Clicked="NavigateToNext" />-->
+                <Button Style="{StaticResource MyButtonStyle}"
+                        BackgroundColor="#77b300"
+                        Text="View budget"
+                        Clicked="NavigateToNext" />
+                <Button Style="{StaticResource MyButtonStyle}"
+                        Text="Spending list"
+                        BackgroundColor="#9966ff"
+                        Clicked="NavigateToNext" />
+                <Button Style="{StaticResource MyButtonStyle}"
+                        Text="Calculate by weight"
+                        BackgroundColor="#33adff"
+                        Clicked="NavigateToNext" />
+                <Button Style="{StaticResource MyButtonStyle}"
+                        Text="Sale discount calculator"
+                        Clicked="NavigateToNext" />
+                <!--<Button Style="{StaticResource MyButtonStyle}"
+                        Text="Admin Settings"
+                        Clicked="NavigateToNext" />-->
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

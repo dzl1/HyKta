@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:views="clr-namespace:HelpYouBudget.NETStandard.Views;assembly=HelpYouBudget.NETStandard"
+             xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             x:Class="HelpYouBudget.NETStandard.Views.CalculateByWeightView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <!--<converters:BgColourConverter x:Key="BgColourConverter" />-->
+            <converters1:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+            <converters1:ButtonColourConverter x:Key="ButtonColourConverter" />
+            <converters1:ButtonTextColourConverter x:Key="ButtonTextColourConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <StackLayout>
+                <Label Text="Type of Calculator"
+                       Margin="20,20,20,0" />
+                <views:PickerModified x:Name="WeightTypePicker"
+                                      StyleId="WeightTypePicker"
+                                      SelectedIndexChanged="PickerTypeChanged"
+                                      Margin="20,0,20,0">
+                    <Picker.Items>
+
+                        <x:String>Product Calculator</x:String>
+                        <x:String>Bulk Buy Calculator</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                </views:PickerModified>
+
+                <StackLayout Orientation="Horizontal" IsVisible="{Binding ProductCalculator, Converter={StaticResource BoolToVisibilityConverter}}" Margin="20,0,20,0">
+                    <Label Text="Compare 2 products?"
+                           VerticalOptions="Center" />
+                    <Switch x:Name="ShowTwoProductsSwitch"
+                            Toggled="ShowHideTwoProducts" />
+                </StackLayout>
+
+
+            </StackLayout>
+            
+            
+            <ScrollView Grid.Row="1">
+                <StackLayout>
+                    <StackLayout x:Name="StackBulkCalculator"
+                                 IsVisible="{Binding BulkCalculator, Converter={StaticResource BoolToVisibilityConverter}}"
+                                 Margin="20,10,20,10">
+
+                        <!--<StackLayout Orientation="Horizontal">
+                        <Label Text="Compare 2 products?"
+                               VerticalOptions="Center" />
+                        <Switch Toggled="ShowHideTwoProducts" />
+                    </StackLayout>-->
+
+                        <Label Text="Enter in the cost and select a type of weight/volume of the item:" />
+
+
+                        <Grid HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="$"
+                                   VerticalOptions="Center" />
+
+                            <views:ModifiedEntry Grid.Column="1"
+                                   Text="{Binding BulkPrice}"
+                                   Placeholder="2.00"
+                                   Keyboard="Numeric"
+                                   HorizontalOptions="Fill" />
+                        </Grid>
+
+                        <Label Text="Per"
+                               VerticalOptions="Center" />
+                        <Grid HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <views:ModifiedEntry  Text="{Binding PerBulkWeight}"
+                                   Placeholder="100"
+                                   Keyboard="Numeric"
+                                   HorizontalOptions="Fill"/>
+
+
+                            <views:PickerModified x:Name="WeightBulkPicker"
+                                                  Grid.Column="1"
+                                                  StyleId="WeightBulkPicker"
+                                                  SelectedIndexChanged="PickerChanged">
+                                <Picker.Items>
+                                    <x:String>e.g Grams...</x:String>
+                                    <x:String>Millilitres</x:String>
+                                    <x:String>Litres</x:String>
+                                    <x:String>Grams</x:String>
+                                    <x:String>Kilograms</x:String>
+                                    <x:String>Ounce</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                            </views:PickerModified>
+                        </Grid>
+
+                        <Label Text="Total weight" />
+
+                        <views:ModifiedEntry 
+                               Text="{Binding BulkWeight}"
+                               Placeholder="{Binding TotalBulkWeight}"
+                               Keyboard="Numeric"
+                               HorizontalOptions="Fill" />
+
+
+                    </StackLayout>
+
+
+
+                    <StackLayout Margin="20,0,20,0"
+                                 x:Name="FirstItemStack"
+                                 IsVisible="{Binding ProductCalculator, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                        <Label Text="Enter in the weight/volume of the item:" />
+
+                        <Grid HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <views:ModifiedEntry  Text="{Binding Volume}"
+                                   Placeholder="100,200,...etc "
+                                   Keyboard="Numeric"
+                                   HorizontalOptions="Fill" />
+
+                            <views:PickerModified x:Name="WeightPicker"
+                                                  Grid.Column="1"
+                                                  StyleId="WeightPickerStyle"
+                                                  SelectedIndexChanged="PickerChanged">
+                                <Picker.Items>
+                                    <x:String>Select...</x:String>
+                                    <x:String>Millilitres</x:String>
+                                    <x:String>Litres</x:String>
+                                    <x:String>Grams</x:String>
+                                    <x:String>Kilograms</x:String>
+                                    <x:String>Ounce</x:String>
+                                </Picker.Items>
+                                <!--<Picker.SelectedIndex>0</Picker.SelectedIndex>-->
+                            </views:PickerModified>
+                        </Grid>
+
+                        <Label Text="Cost of the item:" />
+                        <Grid HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="$"
+                                   VerticalOptions="Center" />
+                            <views:ModifiedEntry  Grid.Column="1"
+                                   Text="{Binding Price}"
+                                   Placeholder="Amount of item"
+                                   Keyboard="Numeric"
+                                   HorizontalOptions="Fill" />
+                        </Grid>
+                    </StackLayout>
+
+
+                    <Grid IsVisible="{Binding ProductCalculator, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid BackgroundColor="Orange" x:Name="GridSecondItem" IsVisible="False">
+                            <StackLayout x:Name="SecondProductStacklayout"
+                                         Margin="20">
+
+                                <Label Text="Second item details"
+                                       Margin="0,10,0,0"
+                                       FontAttributes="Bold" />
+
+
+
+                                <Label Text="Enter in the weight/volume of the item:" />
+
+
+                                <Grid HeightRequest="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <views:ModifiedEntry  Text="{Binding VolumeTwo}"
+                                           Placeholder="100,200,...etc "
+                                           Keyboard="Numeric"
+                                           HorizontalOptions="Fill"
+                                           PlaceholderColor="White" />
+
+                                    <views:PickerModified x:Name="WeightPickerTwo"
+                                                          Grid.Column="1"
+                                                          StyleId="WeightPickerTwoStyle"
+                                                          SelectedIndexChanged="PickerChanged">
+                                        <Picker.Items>
+                                            <x:String>Select...</x:String>
+                                            <x:String>Millilitres</x:String>
+                                            <x:String>Litres</x:String>
+                                            <x:String>Grams</x:String>
+                                            <x:String>Kilograms</x:String>
+                                            <x:String>Ounce</x:String>
+                                        </Picker.Items>
+                                        <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                                    </views:PickerModified>
+                                </Grid>
+
+                                <Label Text="Cost of the item:" />
+                                <Grid HeightRequest="40"
+                                      Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="$"
+                                           VerticalOptions="Center" />
+                                    <views:ModifiedEntry  Grid.Column="1"
+                                           Text="{Binding PriceTwo}"
+                                           Placeholder="Amount of item, e.g $5.00"
+                                           Keyboard="Numeric"
+                                           HorizontalOptions="Fill"
+                                           PlaceholderColor="White" />
+                                </Grid>
+
+
+
+
+
+
+
+                            </StackLayout>
+
+
+                        </Grid>
+                    </Grid>
+
+
+
+                    <Label Text="{Binding Stats}"
+                           Margin="20"
+                           Style="{StaticResource BoldLabelStyleSmall}"
+                           LineBreakMode="WordWrap"
+                           IsVisible="{Binding Stats, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+
+                </StackLayout>
+            </ScrollView>
+            <Grid Margin="20"
+                  Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="Clear"
+                        Clicked="ClearAndResetItems"
+                        Style="{StaticResource MyButtonStyle}" />
+
+                <Button Grid.Column="1"
+                        Text="Calculate"
+                        Clicked="CalculateFirstItem"
+                        Style="{StaticResource MyButtonStyle}" BackgroundColor="{StaticResource Accent}" />
+            </Grid>
+
+            <!--Loading Grid-->
+            <Grid BackgroundColor="White"
+                  Opacity="0.5"
+                  Grid.Row="0"
+                  Grid.RowSpan="3"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ActivityIndicator Color="DeepSkyBlue"
+                                   WidthRequest="100"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsRunning="{Binding IsBusy}" />
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

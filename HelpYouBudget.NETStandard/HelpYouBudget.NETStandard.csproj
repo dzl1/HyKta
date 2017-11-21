@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-win+net45+wp8+win81+wpa8</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Data\Entities\BabyfiedData.cs" />
+    <Compile Remove="Data\Entities\BabyfiedModData.cs" />
+    <Compile Remove="Data\Entities\CourseData.cs" />
+    <Compile Remove="Data\Entities\DataKta.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Mobile.Client" Version="4.0.2" />
+    <PackageReference Include="PCLStorage" Version="1.0.2" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.2.23" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.18342" />
+  </ItemGroup>
+
+</Project>

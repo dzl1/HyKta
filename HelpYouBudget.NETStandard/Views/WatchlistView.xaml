@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="HelpYouBudget.NETStandard.Views.WatchlistView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <!--<converters:BgColourConverter x:Key="BgColourConverter" />-->
+            <converters1:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+            <converters1:ButtonColourConverter x:Key="ButtonColourConverter" />
+            <converters1:ButtonTextColourConverter x:Key="ButtonTextColourConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <ListView x:Name="ListViewProducts"
+                      BackgroundColor="Transparent"
+                      RowHeight="80"
+                      ItemsSource="{Binding ResultsData}"
+                      SeparatorVisibility="None"
+                      ItemSelected="ShowSelectedItem"
+                      IsPullToRefreshEnabled="True"
+                      Refreshing="ReloadReportsRefreshPulled"
+                      Margin="6">
+
+
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <ViewCell>
+                            <Grid Padding="0,0,0,5">
+                                <Grid BackgroundColor="DarkSeaGreen"
+                                      VerticalOptions="Fill"
+                                      HorizontalOptions="Fill"
+                                      Opacity="0.5" />
+                                <Grid  Grid.Row="0"
+                                       VerticalOptions="Center"
+                                       Padding="5"
+                                       Margin="5,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <forms:CachedImage CacheDuration="14"
+                                                       FadeAnimationEnabled="True"
+                                                       FadeAnimationDuration="2"
+                                                       Source="{Binding ProductDescriptionData}"
+                                                       Grid.RowSpan="2"
+                                                       HorizontalOptions="Fill"
+                                                       VerticalOptions="Fill" />
+                                    <Label Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="{Binding ProductName}"
+                                           VerticalOptions="Center"
+                                           Style="{StaticResource BoldLabelStyle}" />
+                                    <Grid Grid.Row="1"
+                                          Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding LowestStore, StringFormat='Lowest Store: {0: N}'}"
+                                               Style="{StaticResource SmallLabelStyle}"
+                                               FontSize="10"
+                                               Margin="0,0,5,0" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding LowestPrice, StringFormat='+ ${0}'}"
+                                               Style="{StaticResource SmallLabelStyle}"
+                                               FontSize="10" />
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid BackgroundColor="White"
+                  Opacity="0.5"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ActivityIndicator Color="DeepSkyBlue"
+                                   WidthRequest="100"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsRunning="{Binding IsBusy}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

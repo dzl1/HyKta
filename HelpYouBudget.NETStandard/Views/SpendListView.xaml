@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:views="clr-namespace:HelpYouBudget.NETStandard.Views;assembly=HelpYouBudget.NETStandard"
+             xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             x:Class="HelpYouBudget.NETStandard.Views.SpendListView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters1:TextBudgetColourConverter x:Key="BudgetColourConverter" />
+            <converters1:BgListViewColourConverter x:Key="BgListViewColourConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <!--ListView Grid and Totals-->
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <ListView x:Name="SpendListViewItems"
+                          BackgroundColor="Transparent"
+                          RowHeight="90"
+                          ItemsSource="{Binding SpendData}"
+                          SeparatorVisibility="None"
+                          ItemSelected="ShowSelectedItem">
+
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <ViewCell>
+                                <Grid Padding="0,0,0,5">
+                                    <Grid BackgroundColor="{Binding IsPermanent, Converter={StaticResource BgListViewColourConverter}}"
+                                          VerticalOptions="Fill"
+                                          HorizontalOptions="Fill"
+                                          Opacity="0.5" />
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0"
+                                               Text="{Binding ProductName}"
+                                               Margin="10,10,0,0"
+                                               HorizontalOptions="StartAndExpand"
+                                               Style="{StaticResource BoldLabelStyle}" />
+
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Description}"
+                                               Margin="10,0,0,-5"
+                                               HorizontalOptions="StartAndExpand"
+                                               Style="{StaticResource SmallLabelStyle}" />
+                                        <Label Grid.Row="2"
+                                               HorizontalOptions="End"
+                                               Text="{Binding ProductPrice, StringFormat='Cost : ${0: N}'}"
+                                               Style="{StaticResource SmallLabelStyle}"
+                                               FontSize="10"
+                                               Margin="0,0,10,10" />
+                                    </Grid>
+
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+                <!--Totals Grid-->
+                <Grid Grid.Row="1"
+                      Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Total Amount: " Style="{StaticResource BoldLabelStyleSmall}"/>
+                    <Label Text="{Binding TotalCost, StringFormat='${0:N2}'}"
+                           Grid.Column="1"
+                           Grid.Row="0"
+                           Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label Text="Total Items: "
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label Text="{Binding TotalItems}"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                           Style="{StaticResource BoldLabelStyleSmall}" />
+
+
+                    <Label Text="Remaining Limit: "
+                           Grid.Row="2"
+                           Grid.Column="0"
+                           IsVisible="{Binding HasIncome, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label TextColor="{Binding IncomeRemaining, Converter={StaticResource BudgetColourConverter}}"
+                           Text="{Binding IncomeRemaining, StringFormat='${0:N2}'}"
+                           IsVisible="{Binding HasIncome, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           Style="{StaticResource BoldLabelStyleSmall}" />
+
+
+
+                </Grid>
+
+
+
+            </Grid>
+
+
+            <!--Buttons Grid-->
+            <Grid Margin="12"
+                  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="Options"
+                        Clicked="ShowOptions"
+                        Style="{StaticResource MyButtonStyle}" />
+
+                <Button Grid.Column="1"
+                        Text="Add Item"
+                        Clicked="AddItemClicked"
+                        BackgroundColor="{StaticResource Accent}"
+                        Style="{StaticResource MyButtonStyle}" />
+            </Grid>
+
+            <!--Add Grid-->
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="2"
+                  x:Name="AddGrid"
+                  IsVisible="{Binding ShowAdd, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      BackgroundColor="{StaticResource BoneColorBackground}"
+                      Grid.RowSpan="2"
+                      Opacity="0.9" />
+
+
+                <ScrollView Grid.Row="0">
+                    <StackLayout Margin="12">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <Label Text="Product Name: " />
+                        <views:ModifiedEntry  Style="{StaticResource ModifiedEntry}"
+                               Placeholder="Type the product/item name here..."
+                               Text="{Binding Data.ProductName}" />
+
+                        <Label Text="Product Price: " />
+                        <Grid HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="$"
+                                   VerticalOptions="Center" />
+
+                            <views:ModifiedEntry Grid.Column="1"
+                                   Placeholder="2.00"
+                                   Text="{Binding Data.ProductPrice}"
+                                   Keyboard="Numeric" />
+                        </Grid>
+
+
+                        <Label Text="Product Description: " />
+                        <views:ModifiedEntry
+                                Placeholder="Short description..."
+                                Text="{Binding Data.Description}" />
+
+                    </StackLayout>
+                </ScrollView>
+
+
+
+
+
+                <!--Buttons Grid-->
+                <Grid Margin="12"
+                      Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="Cancel"
+                            Clicked="CancelAddItemClicked"
+                            Style="{StaticResource MyButtonStyle}" />
+
+                    <Button Grid.Column="1"
+                            Text="Finished"
+                            Clicked="ConfirmAddItemOkClicked"
+                            BackgroundColor="{StaticResource Accent}"
+                            Style="{StaticResource MyButtonStyle}" />
+                </Grid>
+
+
+
+
+
+            </Grid>
+
+
+            <!--Options Grid-->
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="2"
+                  x:Name="OptionsGrid"
+                  HeightRequest="400"
+                  IsVisible="{Binding ShowOptions, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid BackgroundColor="{StaticResource BoneColorBackground}"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      Opacity="0.95" />
+
+                <Grid Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ScrollView>
+                        <StackLayout>
+
+                            <Button Text="Clear Spend List"
+                                    Clicked="ClearAndResetItems"
+                                    Style="{StaticResource MyButtonStyle}" />
+
+                            <StackLayout Margin="0,12,0,0">
+
+                                <Label Text="Set your spending limit" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label VerticalOptions="Center"
+                                           Text="$" />
+                                    <views:ModifiedEntry Placeholder="100"
+                                                         Grid.Column="1"
+                                                         Text="{Binding Income}"
+                                                         Keyboard="Numeric" />
+                                </Grid>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </ScrollView>
+
+                    <Button Grid.Row="1"
+                            Text="Finished"
+                            Margin="0,20,0,0"
+                            Clicked="HideOptionsCancel"
+                            BackgroundColor="{StaticResource Accent}"
+                            Style="{StaticResource MyButtonStyle}" />
+                </Grid>
+
+
+
+
+
+
+            </Grid>
+
+
+
+            <!--Loading Grid-->
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="2"
+                  BackgroundColor="White"
+                  Opacity="0.5"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ActivityIndicator Color="DeepSkyBlue"
+                                   WidthRequest="100"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsRunning="{Binding IsBusy}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

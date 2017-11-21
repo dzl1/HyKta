@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:views="clr-namespace:HelpYouBudget.NETStandard.Views;assembly=HelpYouBudget.NETStandard"
+             xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             x:Class="HelpYouBudget.NETStandard.Views.OverallBudgetView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters1:BudgetDatamainColourConverter x:Key="BudgetDatamainColourConverter" />
+            <converters1:BgListViewColourConverter x:Key="BgListViewColourConverter" />
+            <converters1:LightOrDarkTextColourConverter x:Key="LightOrDarkTextColourConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListView x:Name="SpendListViewItems"
+                      BackgroundColor="Transparent"
+                      RowHeight="80"
+                      ItemsSource="{Binding BudgetDataEntry}"
+                      SeparatorVisibility="None"
+                      ItemSelected="ShowSelectedItem">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <ViewCell>
+                            <Grid Padding="0,0,0,5">
+                                <Grid BackgroundColor="{Binding IncomeOrExpense, Converter={StaticResource BgListViewColourConverter}}"
+                                      VerticalOptions="Fill"
+                                      HorizontalOptions="Fill" />
+
+                                <Grid BackgroundColor="{Binding Frequency, Converter={StaticResource BudgetDatamainColourConverter}}"
+                                      VerticalOptions="Fill"
+                                      HorizontalOptions="Fill"
+                                      IsVisible="{Binding IncomeOrExpense, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}" />
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0"
+                                           Text="{Binding Name}"
+                                           Margin="10,10,0,0"
+                                           HorizontalOptions="StartAndExpand"
+                                           Style="{StaticResource BoldLabelStyleSmall}"
+                                           FontSize="14" />
+                                    <Label Grid.Row="1"
+                                           HorizontalOptions="StartAndExpand"
+                                           Text="{Binding Description}"
+                                           Style="{StaticResource SmallLabelStyle}"
+                                           FontSize="10"
+                                           Margin="10,0,5,0" />
+
+                                    <Label Grid.Row="2"
+                                           HorizontalOptions="StartAndExpand"
+                                           Text="{Binding IncomeOrExpenseString}"
+                                           Style="{StaticResource SmallLabelStyle}"
+                                           TextColor="{Binding IncomeOrExpense, Converter={StaticResource LightOrDarkTextColourConverter}}"
+                                           FontSize="10"
+                                           Margin="10,0,5,0" />
+                                    <Label Grid.Row="2"
+                                           HorizontalOptions="End"
+                                           Text="{Binding Amount, StringFormat='Cost : ${0:N2}'}"
+                                           Style="{StaticResource SmallLabelStyle}"
+                                           FontSize="10"
+                                           Margin="0,0,5,0" />
+                                </Grid>
+
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="1" BackgroundColor="{StaticResource LightGreenBackground}">
+
+                <Grid x:Name="StatsGrid"
+                      Margin="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+
+                    <StackLayout Grid.ColumnSpan="2">
+                        <Label Text="View income &amp; expenses by:"
+                               Style="{StaticResource BoldLabelStyleSmall}"/>
+                        <views:PickerModified x:Name="FrequencyStatsPicker"
+                                              SelectedIndexChanged="PickerTypeStatsChanged">
+                            <Picker.Items>
+
+                                <x:String>Weekly</x:String>
+                                <x:String>Fortnightly</x:String>
+                                <x:String>Monthly</x:String>
+                                <x:String>Annually</x:String>
+                            </Picker.Items>
+                            <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                        </views:PickerModified>
+                    </StackLayout>
+
+
+                    <Label  Grid.Row="1"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Income: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label  Grid.Row="2"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Weekly Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label  Grid.Row="3"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Fortnightly Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label  Grid.Row="4"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Montly Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                    <Label  Grid.Row="5"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Annual Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding TotalIncome, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                    <Label Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding WeeklyCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                    <Label Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding FortnightlyCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                    <Label Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding MonthlyCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                    <Label Grid.Row="5"
+                           Grid.Column="1"
+                           Text="{Binding AnnualCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+
+
+
+                </Grid>
+            </Grid>
+
+
+
+            <!--Details Grid-->
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="2"
+                  x:Name="OptionsGrid"
+                  IsVisible="{Binding ShowDetails, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid BackgroundColor="White"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      Opacity="0.9" />
+
+                <Grid Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ScrollView>
+                        <StackLayout>
+
+
+                            <Label Text="Product name:" />
+                            <views:ModifiedEntry Text="{Binding CurrentBudgetItem.Name}"
+                                                 Placeholder="Name of " />
+
+
+                            <!--<Label Text="{Binding CurrentBudgetItem.Frequency}" />-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalOptions="Center"
+                                       Text="$" />
+                                <views:ModifiedEntry Placeholder="100"
+                                                     Grid.Column="1"
+                                                     Text="{Binding CurrentBudgetItem.Amount}"
+                                                     Keyboard="Numeric" />
+                            </Grid>
+
+
+                            <Label Text="Frequency:"
+                                   Margin="0,12,0,0" />
+                            <views:PickerModified x:Name="FrequencyPicker"
+                                                  SelectedIndexChanged="PickerTypeChanged">
+                                <Picker.Items>
+
+                                    <x:String>Weekly</x:String>
+                                    <x:String>Fortnightly</x:String>
+                                    <x:String>Monthly</x:String>
+                                    <x:String>Annually</x:String>
+                                </Picker.Items>
+                            </views:PickerModified>
+
+
+                            <Label Text="Description:" />
+                            <views:ModifiedEntry Text="{Binding CurrentBudgetItem.Description}"
+                                                 Placeholder="Type any description here..." />
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Income:"
+                                       VerticalOptions="Center" />
+                                <Switch x:Name="IncomeExpenseSwitch"
+                                        IsToggled="{Binding CurrentBudgetItem.IncomeOrExpense}" />
+                            </StackLayout>
+
+                        </StackLayout>
+                    </ScrollView>
+
+                    <Grid Margin="12"
+                          Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Text="Cancel"
+                                Clicked="CancelUpdateClicked"
+                                Style="{StaticResource MyButtonStyle}" />
+
+                        <Button Grid.Column="1"
+                                Text="Update Item"
+                                Clicked="UpdateItemClicked"
+                                Style="{StaticResource MyButtonStyle}" />
+                    </Grid>
+                </Grid>
+
+
+
+
+
+
+            </Grid>
+
+
+
+
+
+            <!--Loading Grid-->
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="2"
+                  BackgroundColor="White"
+                  Opacity="0.5"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ActivityIndicator Color="DeepSkyBlue"
+                                   WidthRequest="100"
+                                   HeightRequest="100"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsRunning="{Binding IsBusy}" />
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
