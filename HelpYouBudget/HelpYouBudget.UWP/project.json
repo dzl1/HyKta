@@ -3,6 +3,9 @@
     "Microsoft.Azure.Mobile.Client": "4.0.2",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "PCLStorage": "1.0.2",
+    "Syncfusion.Xamarin.GridCommon": "15.4.0.17",
+    "Syncfusion.Xamarin.SfChart": "15.4.0.17",
+    "Syncfusion.Xamarin.SfListView": "15.4.0.17",
     "Xamarin.FFImageLoading.Forms": "2.2.23",
     "Xamarin.Forms": "2.4.0.18342"
   },

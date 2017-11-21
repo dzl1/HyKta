@@ -23,8 +23,23 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Mobile.Client" Version="4.0.2" />
     <PackageReference Include="PCLStorage" Version="1.0.2" />
+    <PackageReference Include="Syncfusion.Xamarin.GridCommon" Version="15.4.0.17" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="15.4.0.17" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="15.4.0.17" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.2.23" />
     <PackageReference Include="Xamarin.Forms" Version="2.4.0.18342" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Syncfusion.SfChart.UWP">
+      <HintPath>..\..\..\..\Users\Dave\.nuget\packages\syncfusion.xamarin.sfchart\15.4.0.17\lib\uap10.0\Syncfusion.SfChart.UWP.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.XForms">
+      <HintPath>..\..\..\..\Users\Dave\.nuget\packages\syncfusion.xamarin.sfchart\15.4.0.17\lib\uap10.0\Syncfusion.SfChart.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.XForms.Android">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfChart.15.4.0.17\lib\MonoAndroid10\Syncfusion.SfChart.XForms.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

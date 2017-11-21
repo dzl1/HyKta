@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HelpYouBudget.NETStandard.Data;
 using HelpYouBudget.NETStandard.Data.Entities;
+using HelpYouBudget.NETStandard.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,10 +15,21 @@ namespace HelpYouBudget.NETStandard.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HomeView : ContentPage
 	{
+        public HomeViewModel CurrentViewModel { get; set; }
 		public HomeView ()
 		{
+		    if (CurrentViewModel == null)
+		    {
+		        CurrentViewModel = new HomeViewModel();
+		    }
+		    BindingContext = CurrentViewModel;
 			InitializeComponent ();
-		    NavigationPage.SetBackButtonTitle(this, "");
+		    if (!(Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.iOS))
+		    {
+		        Chart.Series[0].AnimationDuration = 2;
+		    }
+
+            NavigationPage.SetBackButtonTitle(this, "");
         }
 
 	    protected override async void OnAppearing()

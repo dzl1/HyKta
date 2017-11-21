@@ -1,35 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
              x:Class="HelpYouBudget.NETStandard.Views.HomeView">
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource BoneColorBackground}">
-            <StackLayout Margin="12">
-                <!--<Button Style="{StaticResource MyButtonStyle}"
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>-->
+            <!--<ScrollView>
+                <StackLayout Margin="12">
+                    --><!--<Button Style="{StaticResource MyButtonStyle}"
                         Text="Compare products"
                         Clicked="NavigateToNext" />-->
-                <!--<Button Style="{StaticResource MyButtonStyle}"
+                    <!--<Button Style="{StaticResource MyButtonStyle}"
                         Text="View watchlist"
-                        Clicked="NavigateToNext" />-->
-                <Button Style="{StaticResource MyButtonStyle}"
-                        BackgroundColor="#77b300"
-                        Text="View budget"
-                        Clicked="NavigateToNext" />
-                <Button Style="{StaticResource MyButtonStyle}"
-                        Text="Spending list"
-                        BackgroundColor="#9966ff"
-                        Clicked="NavigateToNext" />
-                <Button Style="{StaticResource MyButtonStyle}"
-                        Text="Calculate by weight"
-                        BackgroundColor="#33adff"
-                        Clicked="NavigateToNext" />
-                <Button Style="{StaticResource MyButtonStyle}"
-                        Text="Sale discount calculator"
-                        Clicked="NavigateToNext" />
-                <!--<Button Style="{StaticResource MyButtonStyle}"
+                        Clicked="NavigateToNext" />--><!--
+                    <Button Style="{StaticResource MyButtonStyle}"
+                BackgroundColor="#77b300"
+                Text="View budget"
+                Clicked="NavigateToNext" />
+                    <Button Style="{StaticResource MyButtonStyle}"
+                Text="Spending list"
+                BackgroundColor="#9966ff"
+                Clicked="NavigateToNext" />
+                    <Button Style="{StaticResource MyButtonStyle}"
+                Text="Calculate by weight"
+                BackgroundColor="#33adff"
+                Clicked="NavigateToNext" />
+                    <Button Style="{StaticResource MyButtonStyle}"
+                Text="Sale discount calculator"
+                Clicked="NavigateToNext" />
+                    --><!--<Button Style="{StaticResource MyButtonStyle}"
                         Text="Admin Settings"
-                        Clicked="NavigateToNext" />-->
-            </StackLayout>
+                        Clicked="NavigateToNext" />--><!--
+                </StackLayout>
+            </ScrollView>-->
+            
+            
+            <!--<Grid Grid.Row="1">-->
+                <chart:SfChart x:Name="Chart" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <chart:SfChart.Title>
+                        <chart:ChartTitle Text="Project Cost Breakdown" Font="15"/>
+                    </chart:SfChart.Title>
+                    <chart:SfChart.Legend>
+                        <chart:ChartLegend/>
+                    </chart:SfChart.Legend>
+
+                    <chart:SfChart.Series>
+                        <chart:DoughnutSeries ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Value" ExplodeOnTouch="True" LegendIcon="Rectangle"  EnableAnimation="True" StrokeWidth="1" StrokeColor="White">
+                            <chart:DoughnutSeries.DataMarker>
+                                <chart:ChartDataMarker LabelContent="Percentage" ShowLabel="True">
+                                </chart:ChartDataMarker>
+                            </chart:DoughnutSeries.DataMarker>
+                        </chart:DoughnutSeries>
+                    </chart:SfChart.Series>
+                </chart:SfChart>
+
+
+
+
+            <!--</Grid>-->
+            
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

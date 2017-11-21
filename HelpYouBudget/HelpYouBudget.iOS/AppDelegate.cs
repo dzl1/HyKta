@@ -26,6 +26,8 @@ namespace HelpYouBudget.iOS
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
             LoadApplication(new App());
+            Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
+            Syncfusion.ListView.XForms.iOS.SfListViewRenderer.Init();
 
             return base.FinishedLaunching(app, options);
         }
