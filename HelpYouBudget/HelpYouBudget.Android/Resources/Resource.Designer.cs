@@ -3823,11 +3823,11 @@ namespace HelpYouBudget.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f090047
-			public const int ApplicationName = 2131296327;
+			// aapt resource value: 0x7f09003f
+			public const int ApplicationName = 2131296319;
 			
-			// aapt resource value: 0x7f090046
-			public const int Hello = 2131296326;
+			// aapt resource value: 0x7f09003e
+			public const int Hello = 2131296318;
 			
 			// aapt resource value: 0x7f090015
 			public const int abc_action_bar_home_description = 2131296277;
@@ -4009,26 +4009,26 @@ namespace HelpYouBudget.Droid
 			// aapt resource value: 0x7f09003d
 			public const int path_password_strike_through = 2131296317;
 			
-			// aapt resource value: 0x7f09003f
-			public const int q = 2131296319;
+			// aapt resource value: 0x7f090041
+			public const int q = 2131296321;
 			
-			// aapt resource value: 0x7f09003e
-			public const int quarter = 2131296318;
+			// aapt resource value: 0x7f090040
+			public const int quarter = 2131296320;
 			
 			// aapt resource value: 0x7f090028
 			public const int search_menu_title = 2131296296;
 			
-			// aapt resource value: 0x7f090045
-			public const int sfchart_close_label = 2131296325;
-			
-			// aapt resource value: 0x7f090042
-			public const int sfchart_high_label = 2131296322;
-			
-			// aapt resource value: 0x7f090043
-			public const int sfchart_low_label = 2131296323;
+			// aapt resource value: 0x7f090047
+			public const int sfchart_close_label = 2131296327;
 			
 			// aapt resource value: 0x7f090044
-			public const int sfchart_open_label = 2131296324;
+			public const int sfchart_high_label = 2131296324;
+			
+			// aapt resource value: 0x7f090045
+			public const int sfchart_low_label = 2131296325;
+			
+			// aapt resource value: 0x7f090046
+			public const int sfchart_open_label = 2131296326;
 			
 			// aapt resource value: 0x7f090029
 			public const int status_bar_notification_info_overflow = 2131296297;
@@ -4036,11 +4036,11 @@ namespace HelpYouBudget.Droid
 			// aapt resource value: 0x7f090048
 			public const int title_activity_webview = 2131296328;
 			
-			// aapt resource value: 0x7f090041
-			public const int w = 2131296321;
+			// aapt resource value: 0x7f090043
+			public const int w = 2131296323;
 			
-			// aapt resource value: 0x7f090040
-			public const int week = 2131296320;
+			// aapt resource value: 0x7f090042
+			public const int week = 2131296322;
 			
 			static String()
 			{

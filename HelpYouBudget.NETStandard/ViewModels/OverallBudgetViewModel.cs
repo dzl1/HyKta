@@ -290,9 +290,30 @@ namespace HelpYouBudget.NETStandard.ViewModels
             return new List<BudgetDataMain>();
         }
     }
-    public class OverallBudgetViewModel : BaseViewModel
+    public class OverallBudgetViewModel : BudgetViewModel
     {
-        private ObservableCollection<BudgetDataMain> budgetDataEntry = new ObservableCollection<BudgetDataMain>();
+        public OverallBudgetViewModel()
+        {
+
+            try
+            {
+                if (CurrentBudgetItem == null)
+                {
+                    CurrentBudgetItem = new BudgetDataMain();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+        }
+    }
+
+    public class BudgetViewModel : BaseViewModel
+    {
+         private ObservableCollection<BudgetDataMain> budgetDataEntry = new ObservableCollection<BudgetDataMain>();
 
         public ObservableCollection<BudgetDataMain> BudgetDataEntry
         {
@@ -419,23 +440,7 @@ namespace HelpYouBudget.NETStandard.ViewModels
 
 
 
-        public OverallBudgetViewModel()
-        {
-
-            try
-            {
-                if (CurrentBudgetItem == null)
-                {
-                    CurrentBudgetItem = new BudgetDataMain();
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
-        }
+      
 
         public void SetDefaultBudgetDataMain()
         {

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace HelpYouBudget.NETStandard.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : BudgetViewModel
     {
         private ObservableCollection<ChartDataModel> data = new ObservableCollection<ChartDataModel>();
         public ObservableCollection<ChartDataModel> Data
@@ -19,16 +19,16 @@ namespace HelpYouBudget.NETStandard.ViewModels
 
         public HomeViewModel()
         {
-            Data = new ObservableCollection<ChartDataModel>
-            {
-                new ChartDataModel("Labour", 28),
-                new ChartDataModel("Legal", 10),
-                new ChartDataModel("Production", 20),
-                new ChartDataModel("License", 15),
-                new ChartDataModel("Facilities", 23),
-                new ChartDataModel("Taxes", 17),
-                new ChartDataModel("Insurance", 12)
-            };
+            //Data = new ObservableCollection<ChartDataModel>
+            //{
+            //    new ChartDataModel("Labour", 28),
+            //    new ChartDataModel("Legal", 10),
+            //    new ChartDataModel("Production", 20),
+            //    new ChartDataModel("License", 15),
+            //    new ChartDataModel("Facilities", 23),
+            //    new ChartDataModel("Taxes", 17),
+            //    new ChartDataModel("Insurance", 12)
+            //};
         }
 
         private string mainDataString;
@@ -56,6 +56,8 @@ namespace HelpYouBudget.NETStandard.ViewModels
 
         public double Value { get; set; }
 
+        public string ValueString { get; set; }
+
         public double Value1 { get; set; }
 
         public double Size { get; set; }
@@ -68,6 +70,7 @@ namespace HelpYouBudget.NETStandard.ViewModels
         {
             Name = name;
             Value = value;
+            ValueString = "$" + value + "";
         }
 
         public ChartDataModel(string name, double value, double size)

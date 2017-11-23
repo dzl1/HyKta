@@ -14,6 +14,7 @@ namespace HelpYouBudget.NETStandard.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OverallBudgetView : ContentPage
     {
+        private FrequencyOfIncomeExpenses currentFequencyUsedToCalculate = FrequencyOfIncomeExpenses.Weekly;
         private uint duration = 200;
         private double LocalHeight { get; set; }
         public OverallBudgetViewModel CurrentViewModel { get; set; }
@@ -260,7 +261,6 @@ namespace HelpYouBudget.NETStandard.Views
             CurrentViewModel.ShowDetails = false;
         }
 
-        private FrequencyOfIncomeExpenses currentFequencyUsedToCalculate = FrequencyOfIncomeExpenses.Weekly;
         private void PickerTypeStatsChanged(object sender, EventArgs e)
         {
 
