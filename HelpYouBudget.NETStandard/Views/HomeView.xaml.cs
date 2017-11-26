@@ -300,6 +300,10 @@ namespace HelpYouBudget.NETStandard.Views
                 case "Sale discount calculator":
                     await Navigation.PushAsync(new SaleCalculatorView() { Title = "Sale calculator" });
                     break;
+
+                case "More...":
+                    await Navigation.PushAsync(new MoreView() { Title = "More Options" });
+                    break;
             }
         }
     }
