@@ -6,9 +6,9 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <chart:ChartColorCollection x:Key="Colors">
-                <Color>Red</Color>
                 <Color>Gray</Color>
                 <Color>LawnGreen</Color>
+                <Color>Orange</Color>
                 <Color>DeepPink</Color>
                 <Color>DeepSkyBlue</Color>
             </chart:ChartColorCollection>
@@ -22,12 +22,12 @@
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="1">
                 <StackLayout Margin="12">
-                    <!--<Button Style="{StaticResource MyButtonStyle}"
+                    <Button Style="{StaticResource MyButtonStyle}"
                         Text="Compare products"
                         Clicked="NavigateToNext" />
                     <Button Style="{StaticResource MyButtonStyle}"
                         Text="View watchlist"
-                        Clicked="NavigateToNext" />-->
+                        Clicked="NavigateToNext" />
             
                     <Button Style="{StaticResource MyButtonStyle}"
                 BackgroundColor="#77b300"
@@ -44,6 +44,9 @@
                     <Button Style="{StaticResource MyButtonStyle}"
                 Text="Sale discount calculator"
                 Clicked="NavigateToNext" />
+                    <Button Style="{StaticResource MyButtonStyle}"
+                            Text="Admin Settings"
+                            Clicked="NavigateToNext" />
                     
             <Button Style="{StaticResource MyButtonStyle}"
                         Text="More..."
@@ -61,16 +64,20 @@
                         <chart:ChartLegend DockPosition="Bottom"/>
                     </chart:SfChart.Legend>
                     
-                    <chart:SfChart.ColorModel>
+                    <!--<chart:SfChart.ColorModel>
                         <chart:ChartColorModel Palette="None" CustomBrushes="{StaticResource Colors}"/>
-                    </chart:SfChart.ColorModel>
+                    </chart:SfChart.ColorModel>-->
 
                     <chart:SfChart.Series>
                         <chart:DoughnutSeries ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Value" ExplodeOnTouch="True" LegendIcon="Rectangle"  EnableAnimation="True" StrokeWidth="1" StrokeColor="White">
+                            <chart:DoughnutSeries.ColorModel>
+               <chart:ChartColorModel Palette="Pineapple" />
+  </chart:DoughnutSeries.ColorModel> 
                             <chart:DoughnutSeries.DataMarker>
                                 <chart:ChartDataMarker LabelContent="YValue" ShowLabel="True">
                                     <chart:ChartDataMarker.LabelStyle>
-                                        <chart:DataMarkerLabelStyle LabelFormat="$##.##"/>
+                                        <chart:DataMarkerLabelStyle LabelFormat="$##.##" BindingContext=""/>
+                                       
                                     </chart:ChartDataMarker.LabelStyle>
                                 </chart:ChartDataMarker>
                             </chart:DoughnutSeries.DataMarker>
