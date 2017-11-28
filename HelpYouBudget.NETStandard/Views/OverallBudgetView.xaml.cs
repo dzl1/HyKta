@@ -15,7 +15,7 @@ namespace HelpYouBudget.NETStandard.Views
     public partial class OverallBudgetView : ContentPage
     {
         private FrequencyOfIncomeExpenses currentFequencyUsedToCalculate = FrequencyOfIncomeExpenses.Weekly;
-        private uint duration = 200;
+        private uint duration = 100;
         private double LocalHeight { get; set; }
         public OverallBudgetViewModel CurrentViewModel { get; set; }
         public OverallBudgetView()
@@ -203,7 +203,7 @@ namespace HelpYouBudget.NETStandard.Views
             if (!(lv.SelectedItem is BudgetDataMain sel)) return;
             CurrentBudgetIndex = CurrentViewModel.BudgetDataEntry.IndexOf(sel);
             CurrentViewModel.CurrentBudgetItem = sel;
-
+            CurrentViewModel.ShowStats = false;
 
             switch (sel.Frequency)
             {
@@ -227,11 +227,11 @@ namespace HelpYouBudget.NETStandard.Views
 
             CurrentViewModel.ShowDetails = true;
             await OptionsGrid.TranslateTo(0, 0, duration, Easing.SinOut);
-            lv.SelectedItem = null;
+            //lv.SelectedItem = null;
 
         }
 
-        private async void PickerTypeChanged(object sender, EventArgs e)
+        private void PickerTypeChanged(object sender, EventArgs e)
         {
             if (!(sender is Picker pk)) return;
             CurrentViewModel.CurrentBudgetItem.Frequency = HelperShuffle.ParseEnum<FrequencyOfIncomeExpenses>(pk.Items[pk.SelectedIndex]);
@@ -257,6 +257,7 @@ namespace HelpYouBudget.NETStandard.Views
 
         private async void CancelUpdateClicked(object sender, EventArgs e)
         {
+            SpendListViewItems.SelectedItem = null;
             await OptionsGrid.TranslateTo(0, LocalHeight, duration, Easing.SinOut);
             CurrentViewModel.ShowDetails = false;
         }
@@ -280,6 +281,94 @@ namespace HelpYouBudget.NETStandard.Views
 
 
                 CurrentViewModel.BreakDownText = $"(per {pk.Items[pk.SelectedIndex].Trim(new char[] { 'l', 'y' })})";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+        }
+
+        private void ShowStatsClicked(object sender, EventArgs e)
+        {
+            CurrentViewModel.ShowStats = true;
+        }
+        private void HideStatsClicked(object sender, EventArgs e)
+        {
+            CurrentViewModel.ShowStats = false;
+        }
+
+        private async void ShowItemTapped(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (!(sender is Grid lv)) return;
+
+                if (!(lv.BindingContext is BudgetDataMain sel)) return;
+                CurrentBudgetIndex = CurrentViewModel.BudgetDataEntry.IndexOf(sel);
+                CurrentViewModel.CurrentBudgetItem = sel;
+                CurrentViewModel.ShowStats = false;
+                CurrentViewModel.ShowAdd = false;
+                switch (sel.Frequency)
+                {
+                    case FrequencyOfIncomeExpenses.Weekly:
+                        FrequencyPicker.SelectedIndex = 0;
+                        break;
+                    case FrequencyOfIncomeExpenses.Fortnightly:
+                        FrequencyPicker.SelectedIndex = 1;
+                        break;
+                    case FrequencyOfIncomeExpenses.Monthly:
+                        FrequencyPicker.SelectedIndex = 2;
+                        break;
+                    case FrequencyOfIncomeExpenses.Annually:
+                        FrequencyPicker.SelectedIndex = 3;
+                        break;
+                    default:
+                        FrequencyPicker.SelectedIndex = 0;
+                        break;
+                }
+
+
+                CurrentViewModel.ShowDetails = true;
+                await OptionsGrid.TranslateTo(0, 0, duration, Easing.SinOut);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+        }
+
+        private async void AddItemClicked(object sender, EventArgs e)
+        {
+
+            try
+            {
+                CurrentViewModel.ShowStats = false;
+                CurrentViewModel.ShowDetails = true;
+                await OptionsGrid.TranslateTo(0, 0, duration, Easing.SinOut);
+                CurrentViewModel.ShowAdd = true;
+                CurrentViewModel.CurrentBudgetItem = new BudgetDataMain();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+        }
+
+        private async void SaveItemClicked(object sender, EventArgs e)
+        {
+
+            try
+            {
+                CurrentViewModel.BudgetDataEntry.Add(CurrentViewModel.CurrentBudgetItem);
+                var ord = CurrentViewModel.BudgetDataEntry.OrderByDescending(c => c.IncomeOrExpense).ThenBy(ed => ed.Frequency).ToList();
+                CurrentViewModel.BudgetDataEntry.Replace(ord);
+                CalculateTotals(currentFequencyUsedToCalculate);
+                await OptionsGrid.TranslateTo(0, LocalHeight, duration, Easing.SinOut);
+                CurrentViewModel.ShowDetails = false;
             }
             catch (Exception ex)
             {

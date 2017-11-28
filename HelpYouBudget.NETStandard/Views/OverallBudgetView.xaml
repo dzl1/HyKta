@@ -4,6 +4,7 @@
              xmlns:converters="clr-namespace:Babyfied.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
              xmlns:views="clr-namespace:HelpYouBudget.NETStandard.Views;assembly=HelpYouBudget.NETStandard"
              xmlns:converters1="clr-namespace:HelpYouBudget.NETStandard.Data.Converters;assembly=HelpYouBudget.NETStandard"
+             xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Class="HelpYouBudget.NETStandard.Views.OverallBudgetView">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -14,24 +15,26 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
+        <Grid BackgroundColor="{StaticResource BoneColorBackground}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <ListView x:Name="SpendListViewItems"
+            <xForms:SfListView x:Name="SpendListViewItems"
                       BackgroundColor="Transparent"
-                      RowHeight="80"
                       ItemsSource="{Binding BudgetDataEntry}"
-                      SeparatorVisibility="None"
-                      ItemSelected="ShowSelectedItem">
+                      SelectionMode="None" Grid.RowSpan="2" ItemSize="80">
 
-                <ListView.ItemTemplate>
+                <xForms:SfListView.ItemTemplate>
                     <DataTemplate>
 
                         <ViewCell>
                             <Grid Padding="0,0,0,5">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ShowItemTapped" NumberOfTapsRequired="1"/>
+                                </Grid.GestureRecognizers>
                                 <Grid BackgroundColor="{Binding IncomeOrExpense, Converter={StaticResource BgListViewColourConverter}}"
                                       VerticalOptions="Fill"
                                       HorizontalOptions="Fill" />
@@ -79,141 +82,36 @@
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Grid Grid.Row="1" BackgroundColor="{StaticResource LightGreenBackground}">
-
-                <Grid x:Name="StatsGrid"
+                </xForms:SfListView.ItemTemplate>
+            </xForms:SfListView>
+            <Grid Grid.Row="1" BackgroundColor="{StaticResource LightGreenBackground}" Grid.RowSpan="2"  IsVisible="{Binding ShowStats, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ScrollView>
+                    <Grid x:Name="StatsGrid"
                       Margin="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
 
-                    <StackLayout Grid.ColumnSpan="2">
-                        <Label Text="View income &amp; expenses by:"
+                        <StackLayout Grid.ColumnSpan="2">
+                            <Label Text="View income &amp; expenses by:"
                                Style="{StaticResource BoldLabelStyleSmall}"/>
-                        <views:PickerModified x:Name="FrequencyStatsPicker"
+                            <views:PickerModified x:Name="FrequencyStatsPicker"
                                               SelectedIndexChanged="PickerTypeStatsChanged">
-                            <Picker.Items>
-
-                                <x:String>Weekly</x:String>
-                                <x:String>Fortnightly</x:String>
-                                <x:String>Monthly</x:String>
-                                <x:String>Annually</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>0</Picker.SelectedIndex>
-                        </views:PickerModified>
-                    </StackLayout>
-
-
-                    <Label  Grid.Row="1"
-                            Grid.Column="0"
-                            Text="{Binding BreakDownText, StringFormat='Income: {0:N}'}"
-                            Style="{StaticResource BoldLabelStyleSmall}" />
-                    <Label  Grid.Row="2"
-                            Grid.Column="0"
-                            Text="{Binding BreakDownText, StringFormat='Weekly Costs: {0:N}'}"
-                            Style="{StaticResource BoldLabelStyleSmall}" />
-                    <Label  Grid.Row="3"
-                            Grid.Column="0"
-                            Text="{Binding BreakDownText, StringFormat='Fortnightly Costs: {0:N}'}"
-                            Style="{StaticResource BoldLabelStyleSmall}" />
-                    <Label  Grid.Row="4"
-                            Grid.Column="0"
-                            Text="{Binding BreakDownText, StringFormat='Montly Costs: {0:N}'}"
-                            Style="{StaticResource BoldLabelStyleSmall}" />
-                    <Label  Grid.Row="5"
-                            Grid.Column="0"
-                            Text="{Binding BreakDownText, StringFormat='Annual Costs: {0:N}'}"
-                            Style="{StaticResource BoldLabelStyleSmall}" />
-
-                    <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding TotalIncome, StringFormat='${0:N2}'}"
-                           HorizontalTextAlignment="End"
-                           VerticalOptions="End" />
-                    <Label Grid.Row="2"
-                           Grid.Column="1"
-                           Text="{Binding WeeklyCosts, StringFormat='${0:N2}'}"
-                           HorizontalTextAlignment="End"
-                           VerticalOptions="End" />
-                    <Label Grid.Row="3"
-                           Grid.Column="1"
-                           Text="{Binding FortnightlyCosts, StringFormat='${0:N2}'}"
-                           HorizontalTextAlignment="End"
-                           VerticalOptions="End" />
-                    <Label Grid.Row="4"
-                           Grid.Column="1"
-                           Text="{Binding MonthlyCosts, StringFormat='${0:N2}'}"
-                           HorizontalTextAlignment="End"
-                           VerticalOptions="End" />
-                    <Label Grid.Row="5"
-                           Grid.Column="1"
-                           Text="{Binding AnnualCosts, StringFormat='${0:N2}'}"
-                           HorizontalTextAlignment="End"
-                           VerticalOptions="End" />
-
-
-
-                </Grid>
-            </Grid>
-
-
-
-            <!--Details Grid-->
-            <Grid Grid.Row="0"
-                  Grid.RowSpan="2"
-                  x:Name="OptionsGrid"
-                  IsVisible="{Binding ShowDetails, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid BackgroundColor="White"
-                      HorizontalOptions="Fill"
-                      VerticalOptions="Fill"
-                      Opacity="0.9" />
-
-                <Grid Margin="12">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <ScrollView>
-                        <StackLayout>
-
-
-                            <Label Text="Product name:" />
-                            <views:ModifiedEntry Text="{Binding CurrentBudgetItem.Name}"
-                                                 Placeholder="Name of " />
-
-
-                            <!--<Label Text="{Binding CurrentBudgetItem.Frequency}" />-->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalOptions="Center"
-                                       Text="$" />
-                                <views:ModifiedEntry Placeholder="100"
-                                                     Grid.Column="1"
-                                                     Text="{Binding CurrentBudgetItem.Amount}"
-                                                     Keyboard="Numeric" />
-                            </Grid>
-
-
-                            <Label Text="Frequency:"
-                                   Margin="0,12,0,0" />
-                            <views:PickerModified x:Name="FrequencyPicker"
-                                                  SelectedIndexChanged="PickerTypeChanged">
                                 <Picker.Items>
 
                                     <x:String>Weekly</x:String>
@@ -221,39 +119,160 @@
                                     <x:String>Monthly</x:String>
                                     <x:String>Annually</x:String>
                                 </Picker.Items>
+                                <Picker.SelectedIndex>0</Picker.SelectedIndex>
                             </views:PickerModified>
+                        </StackLayout>
 
 
-                            <Label Text="Description:" />
-                            <views:ModifiedEntry Text="{Binding CurrentBudgetItem.Description}"
+                        <Label  Grid.Row="1"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Income: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                        <Label  Grid.Row="2"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Weekly Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                        <Label  Grid.Row="3"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Fortnightly Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                        <Label  Grid.Row="4"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Montly Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+                        <Label  Grid.Row="5"
+                            Grid.Column="0"
+                            Text="{Binding BreakDownText, StringFormat='Annual Costs: {0:N}'}"
+                            Style="{StaticResource BoldLabelStyleSmall}" />
+
+                        <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding TotalIncome, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                        <Label Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding WeeklyCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                        <Label Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding FortnightlyCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                        <Label Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding MonthlyCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                        <Label Grid.Row="5"
+                           Grid.Column="1"
+                           Text="{Binding AnnualCosts, StringFormat='${0:N2}'}"
+                           HorizontalTextAlignment="End"
+                           VerticalOptions="End" />
+                    </Grid>
+                </ScrollView>
+                <Grid Grid.Row="1" Margin="12">
+
+                    <!--<Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>-->
+
+                    <Button Text="Hide Stats"
+                            Clicked="HideStatsClicked"
+                            Style="{StaticResource MyButtonStyle}" />
+
+                </Grid>
+            </Grid>
+
+
+
+            <!--Details Grid-->
+            <Grid Grid.Row="1"
+                  Grid.RowSpan="2"
+                  x:Name="OptionsGrid"
+                  IsVisible="{Binding ShowDetails, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid BackgroundColor="{StaticResource BoneColorBackground}"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill" Grid.RowSpan="2" />
+                <ScrollView Grid.Row="0">
+                    <StackLayout  Margin="12">
+
+
+                        <Label Text="Product name:" />
+                        <views:ModifiedEntry Text="{Binding CurrentBudgetItem.Name}"
+                                                 Placeholder="Name of " />
+
+
+                        <!--<Label Text="{Binding CurrentBudgetItem.Frequency}" />-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label VerticalOptions="Center"
+                                       Text="$" />
+                            <views:ModifiedEntry Placeholder="100"
+                                                     Grid.Column="1"
+                                                     Text="{Binding CurrentBudgetItem.Amount}"
+                                                     Keyboard="Numeric" />
+                        </Grid>
+
+
+                        <Label Text="Frequency:"
+                                   Margin="0,12,0,0" />
+                        <views:PickerModified x:Name="FrequencyPicker"
+                                                  SelectedIndexChanged="PickerTypeChanged">
+                            <Picker.Items>
+
+                                <x:String>Weekly</x:String>
+                                <x:String>Fortnightly</x:String>
+                                <x:String>Monthly</x:String>
+                                <x:String>Annually</x:String>
+                            </Picker.Items>
+                        </views:PickerModified>
+
+
+                        <Label Text="Description:" />
+                        <views:ModifiedEntry Text="{Binding CurrentBudgetItem.Description}"
                                                  Placeholder="Type any description here..." />
 
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="Income:"
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Income:"
                                        VerticalOptions="Center" />
-                                <Switch x:Name="IncomeExpenseSwitch"
+                            <Switch x:Name="IncomeExpenseSwitch"
                                         IsToggled="{Binding CurrentBudgetItem.IncomeOrExpense}" />
-                            </StackLayout>
-
                         </StackLayout>
-                    </ScrollView>
 
-                    <Grid Margin="12"
-                          Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    </StackLayout>
+                </ScrollView>
 
-                        <Button Text="Cancel"
-                                Clicked="CancelUpdateClicked"
-                                Style="{StaticResource MyButtonStyle}" />
 
-                        <Button Grid.Column="1"
-                                Text="Update Item"
-                                Clicked="UpdateItemClicked"
-                                Style="{StaticResource MyButtonStyle}" />
-                    </Grid>
+                <Grid Margin="12"
+                      Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="Cancel"
+                            Clicked="CancelUpdateClicked"
+                            Style="{StaticResource MyButtonStyle}" />
+
+                    <Button Grid.Column="1" IsVisible="{Binding ShowAdd, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}"
+                            Text="Update Item"
+                            Clicked="UpdateItemClicked"
+                            Style="{StaticResource MyButtonStyle}" />
+                    <Button Grid.Column="1" IsVisible="{Binding ShowAdd, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Text="Save Item"
+                            Clicked="SaveItemClicked"
+                            Style="{StaticResource MyButtonStyle}" />
                 </Grid>
 
 
@@ -263,13 +282,27 @@
 
             </Grid>
 
+            <Grid Grid.Row="2" IsVisible="{Binding ShowDetails, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}">
+                <Grid Margin="12"   IsVisible="{Binding ShowStats, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}">
 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
+                    <Button Text="Stats"
+                            Clicked="ShowStatsClicked"
+                            Style="{StaticResource MyButtonStyle}" />
+                    <Button Grid.Column="1" Text="Add"
+                            Clicked="AddItemClicked"
+                            Style="{StaticResource MyButtonStyle}" />
 
+                </Grid>
+            </Grid>
 
             <!--Loading Grid-->
             <Grid Grid.Row="0"
-                  Grid.RowSpan="2"
+                  Grid.RowSpan="3"
                   BackgroundColor="White"
                   Opacity="0.5"
                   IsVisible="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">

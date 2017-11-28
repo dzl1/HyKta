@@ -309,6 +309,33 @@ namespace HelpYouBudget.NETStandard.ViewModels
             }
 
         }
+
+        private bool showStats;
+
+        public bool ShowStats
+        {
+            get => showStats;
+            set
+            {
+                if (ShowStats == value) return;
+                showStats = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool showAdd;
+
+        public bool ShowAdd
+        {
+            get => showAdd;
+            set
+            {
+                if (ShowAdd == value) return;
+                showAdd = value;
+                RaisePropertyChanged();
+            }
+        }
+
     }
 
     public class BudgetViewModel : BaseViewModel
